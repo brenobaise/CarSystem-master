@@ -1,10 +1,8 @@
 import Order
-#  from AbstractMenu import AbstractMainMenu
-
 import os
 from time import sleep
 
-# Database of items and prices
+# Database of items and prices #
 headers = ["Items", "Price"]
 products = {
     "Items": ["0-Stereo System", "1-Leather Interior", "2-Global Positioning System(GPS)",
@@ -14,6 +12,8 @@ products = {
 }
 
 order = {"Items": [], "Prices": []}
+
+
 # Initialize objects
 car_price = Order.Input()
 allowance = Order.Input()
