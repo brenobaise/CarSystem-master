@@ -6,12 +6,14 @@ from time import sleep
 HEADERS = ["Items", "Price"]
 PRODUCTS = {
     "Items": ["0-Stereo System", "1-Leather Interior", "2-Global Positioning System(GPS)",
-              "3-Standard - Free of Charge", "4-Modified", "5-Customized Detailing", "6 - To restart", "7 - To exit",
+              "3-Standard - Free of Charge", "4-Modified", "5-Customized Detailing",
+              "6 - To restart", "7 - To exit",
               "8- Clear the current bill"],
     "Prices": [30.50, 530.99, 301.90, 0, 370.50, 1257.99, 6]  # index 6 is the tax percentage
 }
 
-order = {"Items": [], "Prices": []}
+order = {"Items": [],
+         "Prices": []}
 
 
 # Initialize objects
