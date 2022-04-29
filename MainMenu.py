@@ -3,8 +3,8 @@ import os
 from time import sleep
 
 # Database of items and prices #
-headers = ["Items", "Price"]
-products = {
+HEADERS = ["Items", "Price"]
+PRODUCTS = {
     "Items": ["0-Stereo System", "1-Leather Interior", "2-Global Positioning System(GPS)",
               "3-Standard - Free of Charge", "4-Modified", "5-Customized Detailing", "6 - To restart", "7 - To exit",
               "8- Clear the current bill"],
@@ -87,7 +87,7 @@ def calculate(price, trade_in_allowance):
     print("Subtotal: ", "£{:,.2f}".format(subtotal))
 
     # Calculate the sales tax based on the subtotal
-    sales_tax = (subtotal / 100) * int(products['Prices'][-1])
+    sales_tax = (subtotal / 100) * int(PRODUCTS['Prices'][-1])
     print("Sales Tax: ", "£{:,.2f}".format(sales_tax))
 
     # Calculate the overall price after allowance.
@@ -101,7 +101,7 @@ def calculate(price, trade_in_allowance):
 
 # Displays Additional Accessories Table.
 def promptProducts():
-    selection.returnBill(products, headers)
+    selection.returnBill(PRODUCTS, HEADERS)
 
 
 # Choose items to be added to the bill.
@@ -121,7 +121,7 @@ def changePrice():
                 print(modify_item)
                 new_value = modify_products.getInput("What would you like to change the price of the item to?: ")
                 print(new_value)
-                modify_products.updateProducts(products, int(modify_item), int(new_value))
+                modify_products.updateProducts(PRODUCTS, int(modify_item), int(new_value))
                 print("New prices updated to additional accessories: ")
 
                 break
@@ -148,8 +148,8 @@ def itemSelection():
     if menuControl(chosen_item):
         print("Order Cleared ...")
     else:
-        Order.Input.updateBill(order, products, chosen_item)  # Updates the selected item into the shopping list(order)
-        selection.returnBill(order, headers)  # Return the order bill in form of a table
+        Order.Input.updateBill(order, PRODUCTS, chosen_item)  # Updates the selected item into the shopping list(order)
+        selection.returnBill(order, HEADERS)  # Return the order bill in form of a table
 
 
 # Run the program #

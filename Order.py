@@ -27,8 +27,8 @@ class Input:
         order['Items'] += [products['Items'][int(chosen_item)]]
         order['Prices'] += [products['Prices'][int(chosen_item)]]
 
-    # order.update(products['Items'][int(chosen_item)])
-    # order.update(products['Prices'][int(chosen_item)])
+    # order.update(PRODUCTS['Items'][int(chosen_item)])
+    # order.update(PRODUCTS['Prices'][int(chosen_item)])
 
     # Uses tho tabulate module to output a table with the parsed argument as a dict
     @staticmethod
