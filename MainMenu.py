@@ -32,12 +32,14 @@ def menuControl(chosen_item):
         return True
 
 
+# Restarts the system
 def reset():
     print("Resetting System ...")
     os.system('cls')  # Clear the console not working
     play()
 
 
+# Exits the system
 def end():
     print("Exiting ...")
     quit()  # use self keyword to call function inside the class
@@ -74,14 +76,21 @@ def play():
     # pass
 
 
+# Handles all calculations within the system
 def calculate(price, trade_in_allowance):
     # calculates the subtotal of inputs and the order+
     # formula is amount divided by 100 multiplied by percentage
+
+    # Sum of all the items in order, plus the car price
     lst = list(order['Prices'])
     subtotal = sum(lst) + int(price)
     print("Subtotal: ", "£{:,.2f}".format(subtotal))
+
+    # Calculate the sales tax based on the subtotal
     sales_tax = (subtotal / 100) * int(products['Prices'][-1])
     print("Sales Tax: ", "£{:,.2f}".format(sales_tax))
+
+    # Calculate the overall price after allowance.
     amount_due = subtotal - int(trade_in_allowance)
     print("Amount Due : ", "£{:,.2f}".format(amount_due))
 
