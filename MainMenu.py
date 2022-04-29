@@ -21,17 +21,6 @@ selection = Order.Input()
 modify_products = Order.Input()
 
 
-def reset():
-    print("Resetting System ...")
-    os.system('cls')  # Clear the console not working
-    play()
-
-
-def end():
-    print("Exiting ...")
-    quit()  # use self keyword to call function inside the class
-
-
 #  Program Control Functions #
 def menuControl(chosen_item):
     if chosen_item == '6':
@@ -41,6 +30,17 @@ def menuControl(chosen_item):
     elif chosen_item == '8':
         selection.clearBill(order)
         return True
+
+
+def reset():
+    print("Resetting System ...")
+    os.system('cls')  # Clear the console not working
+    play()
+
+
+def end():
+    print("Exiting ...")
+    quit()  # use self keyword to call function inside the class
 
 
 # Program Functionality #
