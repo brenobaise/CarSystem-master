@@ -15,7 +15,6 @@ PRODUCTS = {
 order = {"Items": [],
          "Prices": []}
 
-
 # Initialize objects
 car_price = Order.Input()
 allowance = Order.Input()
@@ -23,7 +22,11 @@ selection = Order.Input()
 modify_products = Order.Input()
 
 
+##############################
 #  Program Control Functions #
+##############################
+
+
 def menuControl(chosen_item):
     if chosen_item == '6':
         reset()
@@ -47,7 +50,38 @@ def end():
     quit()  # use self keyword to call function inside the class
 
 
+# Controls whether the user wants to add items to the order.
+def additionalItems():
+    while True:
+        var = selection.getInput("Add an item?:(y/n) ")  # asks for input, returns str.
+        if var.lower() == 'y':
+            itemSelection()
+        elif var.lower() == 'n':
+            break
+
+
+# Handles user input in correlation to the menu.
+def itemSelection():
+    chosen_item = selection.getInput("Choose an Item: ")  # Asks for input, return str
+    if menuControl(chosen_item):
+        print("Order Cleared ...")
+    else:
+        Order.Input.updateBill(order, PRODUCTS, chosen_item)  # Updates the selected item into the shopping list(order)
+        selection.returnBill(order, HEADERS)  # Return the order bill in form of a table
+
+
+# Choose items to be added to the bill.
+def selectItem():
+    if not changePrice():  # Checks if price needs to be changed before user adds items to the order
+        # First item selection of the program
+        additionalItems()
+
+
+#########################
 # Program Functionality #
+#########################
+
+
 def play():
     while True:
         # Before starting a new instance, clear the order bill from past transactions
@@ -65,17 +99,6 @@ def play():
             calculate(price, trade_in_allowance)
             break
     play()
-
-    # reset()
-
-    # def reset():
-    #     counter = 3
-    #     while counter > 0:
-    #         print("Program will reset in:", counter)
-    #         counter -= 1
-    #     play()
-    #
-    # pass
 
 
 # Handles all calculations within the system
@@ -106,13 +129,6 @@ def promptProducts():
     selection.returnBill(PRODUCTS, HEADERS)
 
 
-# Choose items to be added to the bill.
-def selectItem():
-    if not changePrice():  # Checks if price needs to be changed before user adds items to the order
-        # First item selection of the program
-        additionalItems()
-
-
 # Handles the option to change the prices of the dictionary.
 def changePrice():
     while True:
@@ -132,26 +148,6 @@ def changePrice():
         elif var.lower() == 'n':
             break
         return False
-
-
-# Controls whether the user wants to add items to the order.
-def additionalItems():
-    while True:
-        var = selection.getInput("Add an item?:(y/n) ")  # asks for input, returns str.
-        if var.lower() == 'y':
-            itemSelection()
-        elif var.lower() == 'n':
-            break
-
-
-# Handles user input in correlation to the menu.
-def itemSelection():
-    chosen_item = selection.getInput("Choose an Item: ")  # Asks for input, return str
-    if menuControl(chosen_item):
-        print("Order Cleared ...")
-    else:
-        Order.Input.updateBill(order, PRODUCTS, chosen_item)  # Updates the selected item into the shopping list(order)
-        selection.returnBill(order, HEADERS)  # Return the order bill in form of a table
 
 
 # Run the program #
