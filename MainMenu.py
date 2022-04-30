@@ -2,7 +2,9 @@ import Order
 import os
 from time import sleep
 
+################################
 # Database of items and prices #
+################################
 HEADERS = ["Items", "Price"]
 PRODUCTS = {
     "Items": ["0-Stereo System", "1-Leather Interior", "2-Global Positioning System(GPS)",
@@ -26,15 +28,24 @@ modify_products = Order.Input()
 #  Program Control Functions #
 ##############################
 
-
+#
 def menuControl(chosen_item):
-    if chosen_item == '6':
-        reset()
-    elif chosen_item == '7':
-        end()
-    elif chosen_item == '8':
-        selection.clearBill(order)
-        return True
+    # if chosen_item == '6':
+    #     reset()
+    # elif chosen_item == '7':
+    #     end()
+    # elif chosen_item == '8':
+    #     selection.clearBill(order)
+    #     return True
+
+    match chosen_item:
+        case '6':
+            reset()
+        case '7':
+            end()
+        case '8':
+            selection.clearBill(order)
+            return True
 
 
 # Restarts the system
