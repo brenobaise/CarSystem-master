@@ -24,13 +24,13 @@ class Input:
                 # cases will execute based on the condition
                 case True:
                     self.val = isAllowance
-                    print("Trade-in Allowance automatically set to ", self.val)
+                    print("[SYSTEM] Allowance set to", self.val, "due to no input.")
                     return self.val
                 case False:
                     if val.lower() == "clear":
                         return False
                     else:
-                        print("|| Integers Only || Restarting Query ...")
+                        print("[SYSTEM WARNING] Only Integers accepted, restarting query ...")
                         return False
 
     # Updates the dictionary with the given argument at the end

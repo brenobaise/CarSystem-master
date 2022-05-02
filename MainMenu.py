@@ -38,20 +38,20 @@ def menuControl(var):
                 end()
             case 'clear':
                 selection.clearBill(order)
-                print("Order Cleared...")
+                print("[SYSTEM] Order Cleared...")
                 return True
 
 
 # Restarts the system
 def reset():
-    print("Resetting System ...", end='\n')
+    print("[SYSTEM] Resetting...", end='\n')
     os.system('cls')  # Clear the console not working
     play()
 
 
 # Exits the system
 def end():
-    print("Exiting ...")
+    print("[SYSTEM] Exiting ...")
     quit()  # use self keyword to call function inside the class
 
 
@@ -77,7 +77,7 @@ def itemSelection():
         else:
             print("Order Cleared ...")
     except IndexError:
-        print("You can only choose from 0 to 5 items")
+        print("[SYSTEM WARNING] You can only choose from 0 to 5 items")
 
 
 # Choose items to be added to the bill.
@@ -93,7 +93,7 @@ def selectItem():
 
 
 def play():
-    print("You can type clear, restart or exit anytime in the program.")
+    print("[SYSTEM] You can type clear, restart or exit anytime in the program.")
     while True:
         selection.clearBill(order)  # Clears the "shopping basket" before starting a new order.
         #
@@ -168,11 +168,11 @@ def changePrice():
                 print("New value of", PRODUCTS['Items'][item], ": £", new_value)
                 # updates the PRODUCTS dictionary with the parsed item to change and its new value.
                 modify_products.updateProducts(PRODUCTS, int(modify_item), int(new_value))
-                print("New prices updated to additional accessories database... ")
+                print("[SYSTEM] New prices updated to database... ")
 
                 break
             except IndexError:
-                print("You can only choose from 0 to 5 items")
+                print("[SYSTEM] You can only choose from 0 to 5 items")
         elif var.lower() == 'n':
             break
     return False
