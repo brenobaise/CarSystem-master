@@ -28,13 +28,6 @@ modify_products = Order.Input()
 
 
 def menuControl(chosen_item):
-    # if chosen_item == '6':
-    #     reset()
-    # elif chosen_item == '7':
-    #     end()
-    # elif chosen_item == '8':
-    #     selection.clearBill(order)
-    #     return True
     if chosen_item.isnumeric():
         return True
     else:
@@ -97,24 +90,25 @@ def selectItem():
 
 
 def play():
-    print("You can type clear, restart or exit anytime in the program.", end='\n')
+    print("You can type clear, restart or exit anytime in the program.")
     while True:
-        # Before starting a new instance, clear the order bill from past transactions
         selection.clearBill(order)
-        price = car_price.checkValidity(car_price.getInput("Initial car sale price: "))  # Returning only boolean values
-        # Asks for allowance, check if allowance is a number
-        trade_in_allowance = allowance.checkValidity(
-            allowance.getInput("Any trade-in allowance: "))  # Returning only boolean values
+        # First input, Price of the car
+        price = car_price.checkValidity(car_price.getInput("Initial car sale price: "), False)
 
-        # Validate if price and allowance have been checked, prints the bill.
-        if price and trade_in_allowance:
-            print("Basic Car Price Entered:", price, trade_in_allowance, end='\n')
+        if int(price) < 1:  # ONLY allows the program to proceed if price is a number
+            continue
+        else:
+            # Second input, allowance if any
+            trade_in_allowance = allowance.checkValidity(allowance.getInput("Trade-in allowance: "), True)
+
+            # Proceed to menu, select items and calculate order
+            print("Basic Car Price Entered:", int(price), int(trade_in_allowance), end='\n')
             print("-" * 46)
             promptProducts()
             selectItem()
             calculate(price, trade_in_allowance)
             break
-    play()
 
 
 # Handles all calculations within the system
