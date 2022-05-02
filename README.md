@@ -1,11 +1,12 @@
 # CarSystem
 The program runs from the MainMenu.py. Check if tabulate is imported, otherwise products{} and order{} will not show.
 
-The products{} allows the user to add items to its order, and it also provides menu control input.
-"6-to restart", "7-to exit".
+The PRODUCTS dictionary is the main menu, the order dictionary is the user's shopping basket.
 
+Note:
 The program automatically restarts after every transaction.
 
-Missing Features.
-To be able to change the price of the items inside the dictionary.  Fixed [07/04/2022]
-To be able to clear the current order
+
+Added Features:
+Program now handles any sort of input accordingly.[02/05/2022]
+Program now allows the user to control the flow of the program within any step of its execution. [30/04/2022]
