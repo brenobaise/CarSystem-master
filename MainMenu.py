@@ -8,9 +8,7 @@ from time import sleep
 HEADERS = ["Items", "Price"]
 PRODUCTS = {
     "Items": ["0-Stereo System", "1-Leather Interior", "2-Global Positioning System(GPS)",
-              "3-Standard - Free of Charge", "4-Modified", "5-Customized Detailing",
-              "6 - To restart", "7 - To exit",
-              "8- Clear the current bill"],
+              "3-Standard - Free of Charge", "4-Modified", "5-Customized Detailing"],
     "Prices": [30.50, 530.99, 301.90, 0, 370.50, 1257.99, 6]  # index 6 is the tax percentage
 }
 
@@ -28,7 +26,7 @@ modify_products = Order.Input()
 #  Program Control Functions #
 ##############################
 
-#
+
 def menuControl(chosen_item):
     # if chosen_item == '6':
     #     reset()
@@ -37,20 +35,23 @@ def menuControl(chosen_item):
     # elif chosen_item == '8':
     #     selection.clearBill(order)
     #     return True
-
-    match chosen_item:
-        case '6':
-            reset()
-        case '7':
-            end()
-        case '8':
-            selection.clearBill(order)
-            return True
+    if chosen_item.isnumeric():
+        return True
+    else:
+        match chosen_item.lower():
+            case 'reset' | 'restart':
+                reset()
+            case 'exit':
+                end()
+            case 'clear':
+                selection.clearBill(order)
+                print("Order Cleared...")
+                return True
 
 
 # Restarts the system
 def reset():
-    print("Resetting System ...")
+    print("Resetting System ...", end='\n')
     os.system('cls')  # Clear the console not working
     play()
 
@@ -65,7 +66,9 @@ def end():
 def additionalItems():
     while True:
         var = selection.getInput("Add an item?:(y/n) ")  # asks for input, returns str.
-        if var.lower() == 'y':
+        if menuControl(var):
+            continue
+        elif var.lower() == 'y':
             itemSelection()
         elif var.lower() == 'n':
             break
@@ -75,10 +78,10 @@ def additionalItems():
 def itemSelection():
     chosen_item = selection.getInput("Choose an Item: ")  # Asks for input, return str
     if menuControl(chosen_item):
-        print("Order Cleared ...")
-    else:
         Order.Input.updateBill(order, PRODUCTS, chosen_item)  # Updates the selected item into the shopping list(order)
         selection.returnBill(order, HEADERS)  # Return the order bill in form of a table
+    else:
+        print("Order Cleared ...")
 
 
 # Choose items to be added to the bill.
@@ -94,16 +97,18 @@ def selectItem():
 
 
 def play():
+    print("You can type clear, restart or exit anytime in the program.", end='\n')
     while True:
         # Before starting a new instance, clear the order bill from past transactions
         selection.clearBill(order)
-        price = car_price.checkValidity(car_price.getInput("Initial Car Price: "))  # Returning only boolean values
+        price = car_price.checkValidity(car_price.getInput("Initial car sale price: "))  # Returning only boolean values
         # Asks for allowance, check if allowance is a number
         trade_in_allowance = allowance.checkValidity(
-            allowance.getInput("Trade-in Allowance: "))  # Returning only boolean values
+            allowance.getInput("Any trade-in allowance: "))  # Returning only boolean values
+
         # Validate if price and allowance have been checked, prints the bill.
         if price and trade_in_allowance:
-            print("Basic Car Price Entered:", price, trade_in_allowance)
+            print("Basic Car Price Entered:", price, trade_in_allowance, end='\n')
             print("-" * 46)
             promptProducts()
             selectItem()
@@ -144,7 +149,9 @@ def promptProducts():
 def changePrice():
     while True:
         var = modify_products.getInput("Would you like to change the price of a item?:(y/n) ")
-        if var.lower() == "y":
+        if menuControl(var):
+            continue
+        elif var.lower() == "y":
             try:
                 modify_item = modify_products.getInput("Which item would you like to change?:")
                 print(modify_item)
@@ -158,7 +165,7 @@ def changePrice():
                 print("Integers only")
         elif var.lower() == 'n':
             break
-        return False
+    return False
 
 
 # Run the program #

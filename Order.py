@@ -3,8 +3,10 @@ from tabulate import tabulate
 
 class Input:
     def __init__(self, text=""):
+
         self.self = self
         self.text = text
+        self.allowance = 0
 
     def getInput(self, text):  # Returns an input function in form of text from an instance
         self.self = self
@@ -15,11 +17,23 @@ class Input:
     # validates if an input is a number
     def checkValidity(self, val):
         self.self = self
-        if val.isnumeric():
-            return val
-        else:
+        try:
+            if val.isnumeric():
+                return val
+            elif val.isspace():
+                val = self.allowance
+                return val
+
+        except:
             print("|| Integers Only || Restarting Query ...")
             return False
+
+        # if val.isnumeric():
+        #     return val
+        # elif val.isspace():
+        #     val = self.allowance
+        #     return val
+        # else:
 
     # Updates the dictionary with the given argument at the end
     @staticmethod
