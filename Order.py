@@ -27,8 +27,11 @@ class Input:
                     print("Trade-in Allowance automatically set to ", self.val)
                     return self.val
                 case False:
-                    print("|| Integers Only || Restarting Query ...")
-                    return False
+                    if val.lower() == "clear":
+                        return False
+                    else:
+                        print("|| Integers Only || Restarting Query ...")
+                        return False
 
     # Updates the dictionary with the given argument at the end
     @staticmethod
