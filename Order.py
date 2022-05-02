@@ -6,7 +6,7 @@ class Input:
 
         self.self = self
         self.text = text
-        self.allowance = 0
+        self.val = None
 
     def getInput(self, text):  # Returns an input function in form of text from an instance
         self.self = self
@@ -15,34 +15,26 @@ class Input:
         return input(text)
 
     # validates if an input is a number
-    def checkValidity(self, val):
-        self.self = self
-        try:
-            if val.isnumeric():
-                return val
-            elif val.isspace():
-                val = self.allowance
-                return val
-
-        except:
-            print("|| Integers Only || Restarting Query ...")
-            return False
-
-        # if val.isnumeric():
-        #     return val
-        # elif val.isspace():
-        #     val = self.allowance
-        #     return val
-        # else:
+    def checkValidity(self, val, allowance=None):
+        isAllowance = 0  # default value of val
+        if val.isdigit():
+            return val
+        else:  # if not a digit, then check if allowance is parsed
+            match allowance:
+                # cases will execute based on the condition
+                case True:
+                    self.val = isAllowance
+                    print("Trade-in Allowance automatically set to ", self.val)
+                    return self.val
+                case False:
+                    print("|| Integers Only || Restarting Query ...")
+                    return False
 
     # Updates the dictionary with the given argument at the end
     @staticmethod
     def updateBill(order, products, chosen_item):
         order['Items'] += [products['Items'][int(chosen_item)]]
         order['Prices'] += [products['Prices'][int(chosen_item)]]
-
-    # order.update(PRODUCTS['Items'][int(chosen_item)])
-    # order.update(PRODUCTS['Prices'][int(chosen_item)])
 
     # Uses tho tabulate module to output a table with the parsed argument as a dict
     @staticmethod
