@@ -36,15 +36,32 @@ class Input:
     # Updates the dictionary with the given argument at the end
     @staticmethod
     def updateBill(order, products, chosen_item):
-        order['Items'] += [products['Items'][int(chosen_item)]]
-        order['Prices'] += [products['Prices'][int(chosen_item)]]
+        # order['Items'].append(int(chosen_item))
+        # order["Items"].append(products["Items"][int(chosen_item)])
+        order['Items'].append(products['Items'][int(chosen_item)])
+        order['Prices'].append(products['Prices'][int(chosen_item)])
+        if products["Items"][int(chosen_item)] in order["Items"]:
+
+            lst = list(dict.fromkeys(order["Items"]))
+            prices = list(dict.fromkeys(order["Prices"]))
+            print(lst)
+            order["Items"] = lst
+            order["Prices"] = prices
+
+        # order['Items'] += [products['Items'][int(chosen_item)]]
+        # order['Prices'] += [products['Prices'][int(chosen_item)]]
 
     # Uses tho tabulate module to output a table with the parsed argument as a dict
     @staticmethod
-    def returnBill(order, headers):
-        print("Your selected additional accessories: ")
-        print(tabulate(order, headers, tablefmt="pipe"))
-        print("-" * 46)
+    def returnBill(order, headers, menu=None):
+        if menu:
+            print("Your chosen detailing: ")
+            print(tabulate(order, headers, tablefmt="pipe"))
+            print("-" * 46)
+        else:
+            print("Additional accessories: ")
+            print(tabulate(order, headers, tablefmt="pipe"))
+            print("-" * 46)
 
     # Returns the given dictionary to empty values
     @staticmethod
