@@ -1,6 +1,8 @@
 # CarSystem
 # Author: Joao Breno Baise
 # Final update: 20/05/2022
+from tabulate import tabulate
+
 import Order
 import os
 from time import sleep
@@ -39,9 +41,9 @@ def main():
         elif var:
             match var.lower():  # if the condition doesn't satisfy, check for control flow options
                 case 'reset' | 'restart':
-                    reset()  #F
+                    reset()  # F
                 case 'exit':
-                    end()  #F
+                    end()  # F
                 case 'clear':
                     selection.clearBill(order)
                     print("[SYSTEM] Order Cleared...")
@@ -53,12 +55,12 @@ def main():
     def reset():
         print("[SYSTEM] Resetting...", end='\n')
         os.system('cls')  # Clear the console not working
-        main()  #F
+        main()  # F
 
     # Exits the system
     def end():
         print("[SYSTEM] Exiting ...")
-        quit()  #F  # use self keyword to call function inside the class
+        quit()  # F  # use self keyword to call function inside the class
 
     # Controls whether the user wants to add items to the order.
     def additionalItems():
@@ -66,7 +68,7 @@ def main():
             var = selection.getInput("Add an item?:(y/n) ")  # asks for input, returns str.
             menuControl(var)  # F  # Checks for Control Flow
             if var.lower() == 'y':
-                itemSelection()  #F
+                itemSelection()  # F
             elif var.lower() == 'n':
                 break
 
@@ -87,12 +89,12 @@ def main():
 
     # Choose items to be added to the bill.
     def selectItem():
-        promptProducts(detailing)  #F # Display Detailing Menu
+        promptProducts(detailing)  # F # Display Detailing Menu
         while True:
             chosen_item = selection.getInput("Choose your Detailing: ")  # Asks for input, return str
             try:
                 try:
-                    menuControl(chosen_item)  #F
+                    menuControl(chosen_item)  # F
                     Order.Input.updateBill(order, detailing, chosen_item)  # Updates item into the "shopping list"
                     print("Your chosen detailing: ", detailing["Items"][int(chosen_item)])  # Display selected item
                     break
@@ -101,10 +103,10 @@ def main():
             except IndexError:
                 print("[SYSTEM WARNING] You can only choose from 0 to 2 items")
 
-        promptProducts()  #F # Print PRODUCTS DATABASE
-        if not changePrice():  #F  # Checks if price needs to be changed before user adds items to the order
+        promptProducts()  # F # Print PRODUCTS DATABASE
+        if not changePrice():  # F  # Checks if price needs to be changed before user adds items to the order
             # First item selection of the program
-            additionalItems()  #F
+            additionalItems()  # F
 
     #########################
     # Program Functionality #
@@ -115,7 +117,7 @@ def main():
         while True:
             # First input, Price of the car
             car_input = car_price.getInput("Initial car sale price: ")
-            menuControl(car_input)  #F # Checks for Control Flow.
+            menuControl(car_input)  # F # Checks for Control Flow.
             checked_price = car_price.checkValidity(car_input, False)  # Check for valid input
             price = checked_price
 
@@ -124,7 +126,7 @@ def main():
             else:
                 # Second input
                 allowance_input = allowance.getInput("Trade-in allowance: ")
-                menuControl(allowance_input) # F # Check for Control Flow
+                menuControl(allowance_input)  # F # Check for Control Flow
                 checked_allowance = allowance.checkValidity(allowance_input, True)  # Check for valid input
                 trade_in_allowance = checked_allowance
 
@@ -133,8 +135,9 @@ def main():
                 print("Basic Car Price Entered: ", int(price),
                       "\nTrade-in Allowance: ", int(trade_in_allowance), end='\n')  # Display inputs
                 print("-" * 46)
-                selectItem() #F # handles user choices
-                calculate(price, trade_in_allowance)  #F  # Calculations
+                selectItem()  # F # handles user choices
+                calculate(price, trade_in_allowance)  # F  # Calculations
+
                 break
 
     # Handles all calculations within the system
@@ -156,9 +159,26 @@ def main():
         amount_due = subtotal - int(trade_in_allowance)
         print("Amount Due : ", "£{:,.2f}".format(amount_due))
 
-        sleep(2)  #F
+        while True:
+            var = selection.getInput("Would you like to print? :(y/n) ")  # asks for input, returns str.
+            menuControl(var)  # F  # Checks for Control Flow
+            if var.lower() == 'y':
+                with open("TestFile.txt", "w") as f:
+                    f.write("Here is your receipt\n")
+                    f.write(tabulate(order, HEADERS, tablefmt="pipe"))
+                    f.write("\n" + "Thank you for shopping with us! \n")
+                    f.write('Subtotal: {} \n'.format("£{:,.2f}".format(subtotal)))
+                    f.write('Sales Tax: {} \n'.format("£{:,.2f}".format(sales_tax)))
+                    f.write("Amount Due: {} \n".format("£{:,.2f}".format(amount_due)))
+
+                os.startfile("TestFile.txt",
+                             "print")
+            elif var.lower() == 'n':
+                break
+
+        sleep(2)  # F
         # Program Ends
-        reset()  #F
+        reset()  # F
 
     # Displays Additional Accessories Table.
     def promptProducts(*args):
@@ -172,16 +192,16 @@ def main():
     def changePrice():
         while True:
             var = modify_products.getInput("Would you like to change the price of a item?:(y/n) ")
-            menuControl(var)  #F # checks Control Flow.
+            menuControl(var)  # F # checks Control Flow.
             if var.lower() == "y":
                 try:
                     modify_item = modify_products.getInput("Which item would you like to change?:")
-                    menuControl(modify_item)  #F # checks Control Flow.
+                    menuControl(modify_item)  # F # checks Control Flow.
 
                     item = int(modify_item)
                     print("Selected Item: ", PRODUCTS['Items'][item])
                     new_value = modify_products.getInput("What would you like to change the price of the item to?: ")
-                    menuControl(new_value)  #F  # checks Control Flow.
+                    menuControl(new_value)  # F  # checks Control Flow.
                     print("New value of", PRODUCTS['Items'][item], ": £", new_value)
                     # updates the PRODUCTS dictionary with the parsed item to change and its new value.
                     modify_products.updateProducts(PRODUCTS, int(modify_item), int(new_value))
